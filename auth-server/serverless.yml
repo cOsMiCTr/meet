@@ -1,3 +1,5 @@
+org: cosmictr
+app: auth-server
 service: auth-server
 
 provider:
