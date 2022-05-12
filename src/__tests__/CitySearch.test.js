@@ -34,7 +34,9 @@ describe("<CitySearch /> component", () => {
   });
 
 
-  // *********Deactivated because it is not working, could not understand why**************
+  // Not working, I do not know why....
+
+
 
   // test('render list of suggestions correctly', () => {
   //   CitySearchWrapper.setState({ suggestions: locations });
