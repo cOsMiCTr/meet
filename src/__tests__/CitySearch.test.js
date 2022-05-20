@@ -34,32 +34,29 @@ describe("<CitySearch /> component", () => {
   });
 
 
-  // Not working, I do not know why....
 
 
+  test('render list of suggestions correctly', () => {
+    CitySearchWrapper.setState({ suggestions: locations });
+    const suggestions = CitySearchWrapper.state('suggestions');
+    expect(CitySearchWrapper.find('.suggestions li')).toHaveLength(suggestions.length + 1);
+    for (let i = 0; i < suggestions.length; i += 1) {
+      expect(CitySearchWrapper.find('.suggestions li').at(i).text()).toBe(suggestions[i]);
+    }
+  });
 
-  // test('render list of suggestions correctly', () => {
-  //   CitySearchWrapper.setState({ suggestions: locations });
-  //   const suggestions = CitySearchWrapper.state('suggestions');
-  //   expect(CitySearchWrapper.find('.suggestions li')).toHaveLength(suggestions.length + 1);
-  //   for (let i = 0; i < suggestions.length; i += 1) {
-  //     expect(CitySearchWrapper.find('.suggestions li').at(i).text()).toBe(suggestions[i]);
-  //   }
-  // });
 
-
-  // test('suggestion list match the query when changed', () => {
-  //   CitySearchWrapper.setState({ query: '', suggestions: [] });
-  //   CitySearchWrapper.find(".city").simulate("change", {
-  //     target: { value: "Berlin" },
-  //   });
-  //   const query = CitySearchWrapper.state("query");
-  //   const filteredLocations = locations.filter((location) => {
-  //     return location.toUpperCase().indexOf(query.toUpperCase()) > -1;
-  //   });
-  //   expect(CitySearchWrapper.state("suggestions")).toEqual(filteredLocations);
-  // });
-
+  test('suggestion list match the query when changed', () => {
+    CitySearchWrapper.setState({ query: '', suggestions: [] });
+    CitySearchWrapper.find(".city").simulate("change", {
+      target: { value: "Berlin" },
+    });
+    const query = CitySearchWrapper.state("query");
+    const filteredLocations = locations.filter((location) => {
+      return location.toUpperCase().indexOf(query.toUpperCase()) > -1;
+    });
+    expect(CitySearchWrapper.state("suggestions")).toEqual(filteredLocations);
+  });
 
 
 });
