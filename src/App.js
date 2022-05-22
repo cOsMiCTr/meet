@@ -47,19 +47,7 @@ class App extends Component {
     }
   };
 
-  updateNumberOfEvents = async (e) => {
-    const number = e.target.value;
-    if (number > 0 && number < 33) {
-      await this.setState({
-        numberOfEvents: number,
-      });
-      this.updateEvents(this.state.currentLocation, this.state.numberOfEvents);
-    } else {
-      await this.setState({
-        numberOfEvents: 32
-      });
-    }
-  }  
+
 
   componentDidMount() {
     this.mounted = true;
