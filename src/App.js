@@ -14,21 +14,38 @@ class App extends Component {
     events: [],
     locations: [],
     numberOfEvents: 32,
+    eventCount: 15,
     currentLocation: 'all'    
   }
 
-  updateEvents = (location, numberOfEvents) => {
-    getEvents().then((events) => {
-      const locationEvents = (location === 'all') ?
-        events :
-        events.filter((event) => event.location === location);
-      
-      this.setState({
-        events: locationEvents.slice(0, numberOfEvents),
-        currentLocation: location
+  updateEvents = (location, eventNumber) => {
+    const { currentLocation, eventCount } = this.state;
+    if (location) {
+      getEvents().then((events) => {
+        const locationEvents =
+          location === 'all'
+            ? events
+            : events.filter((event) => event.location === location);
+        const filteredEvents = locationEvents.slice(0, eventCount);
+        this.setState({
+          events: filteredEvents,
+          currentLocation: location,
+        });
       });
-    });
-  }
+    } else {
+      getEvents().then((events) => {
+        const locationEvents =
+          currentLocation === 'all'
+            ? events
+            : events.filter((event) => event.location === currentLocation);
+        const filteredEvents = locationEvents.slice(0, eventNumber);
+        this.setState({
+          events: filteredEvents,
+          eventCount: eventNumber,
+        });
+      });
+    }
+  };
 
   updateNumberOfEvents = async (e) => {
     const number = e.target.value;
@@ -58,10 +75,11 @@ class App extends Component {
   }
 
   render() {
+    const { eventCount } = this.state;
     return (
       <div className="App">
         <CitySearch locations={this.state.locations} updateEvents={this.updateEvents} />
-        <NumberOfEvents numberOfEvents={this.state.numberOfEvents} updateNumberOfEvents={this.updateNumberOfEvents} />
+        <NumberOfEvents updateEvents={this.updateEvents} eventCount={eventCount} />
         <EventList events={this.state.events} />
       </div>
     );
