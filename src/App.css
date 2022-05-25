@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:500);
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
 .App {
   text-align: center;
   padding: 2% 5%;
@@ -6,6 +6,11 @@
 
 .App * {
   box-sizing: border-box;
+}
+
+h1{
+  text-align: center;
+  margin: 4rem;
 }
 
 ul {
@@ -22,6 +27,10 @@ p {
 }
 .showSuggestions {
   display: block;
+}
+
+.Alert {
+  font-size: smaller;
 }
 
 input[type="text"],
@@ -83,6 +92,7 @@ input[type="number"] {
   border: 1px solid #ccc;
   border-radius: 4px;
   position: relative;
+  
 }
 
 .details-btn {
@@ -115,9 +125,7 @@ input[type="number"] {
 }
 
 .numberOfEvents {
-  width: 200px;
-  margin: 20px auto;
-  text-align: center;
+  text-align: left;
 }
 
 .button-wrapper {
