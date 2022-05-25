@@ -101,14 +101,6 @@ export const getEvents = async () => {
   }
 };
 
-// export const extractLocations = (events) => {
-//   let [{ items }] = events;
-
-//   let extractLocations = items.map((event) => event.location);
-//   let locations = [...new Set(extractLocations)];
-//   return locations;
-// };
-
 export const extractLocations = (events) => {
   var extractLocations = events.map((event) => event.location);
   var locations = [...new Set(extractLocations)];
