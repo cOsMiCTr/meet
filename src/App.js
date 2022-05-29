@@ -48,7 +48,6 @@ class App extends Component {
     this.mounted = true;
 
     let target = document.getElementById("target");
-    target.innerHTML = "";
     target.innerHTML = navigator.onLine
       ? ""
       : "You are offline.";
