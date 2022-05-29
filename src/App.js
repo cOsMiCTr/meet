@@ -48,19 +48,20 @@ class App extends Component {
     this.mounted = true;
 
     let target = document.getElementById("target");
-    target.innerHTML = navigator.onLine
-      ? ""
-      : "You are offline.";
-
-
+    target.innerHTML = navigator.onLine ? "" : "You are offline.";
 
     function handleStateChange() {
       target.innerHTML = "";
       let newState = document.createElement("p");
+      let networkState = navigator.onLine ? "online" : "offline";
+      
+      if (networkState === "online") {
+        return newState.innerHTML = "";
+      } else {
+        return newState.innerHTML = "You are " + networkState + ".";
+      }
+      
 
-      let networkState = navigator.onLine
-      ? "" 
-      : newState.innerHTML = "You are " + networkState + ".";
       target.appendChild(newState);
     }
 
