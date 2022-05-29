@@ -58,7 +58,10 @@ class App extends Component {
     function handleStateChange() {
       target.innerHTML = "";
       let newState = document.createElement("p");
-      newState.innerHTML = "You are " + navigator.onLine + ".";
+      let networkState = navigator.onLine
+      ? "online"
+      : "offline";
+      newState.innerHTML = "You are " + networkState + ".";
       target.appendChild(newState);
     }
 
