@@ -50,11 +50,7 @@ class App extends Component {
     this.mounted = true;
 
     function handleStateChange() {
-      if (navigator.onLine === "online") {
-        return this.state.offlineText = "";
-      } else {
-        return this.state.offlineText = "You are offline.";
-      }
+      document.getElementById('status').innerText = navigator.onLine ? 'online' : 'offline';
       
     }
 
@@ -76,7 +72,7 @@ class App extends Component {
     const { eventCount } = this.state;
     return (
       <div>
-        <OfflineAlert id="target" text={this.state.offlineText}/>
+        <OfflineAlert id="status" text={this.state.offlineText}/>
         <h1>Meet APP by cOsMiC</h1>
         <p style={{ textAlign: "center" }}>
           Please choose a city to show its events!
