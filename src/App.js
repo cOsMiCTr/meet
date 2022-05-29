@@ -50,7 +50,7 @@ class App extends Component {
     let target = document.getElementById("target");
     target.innerHTML = "";
     target.innerHTML = navigator.onLine
-      ? "You are online."
+      ? ""
       : "You are offline.";
 
 
@@ -58,10 +58,10 @@ class App extends Component {
     function handleStateChange() {
       target.innerHTML = "";
       let newState = document.createElement("p");
+
       let networkState = navigator.onLine
-      ? "online"
-      : "offline";
-      newState.innerHTML = "You are " + networkState + ".";
+      ? "" 
+      : newState.innerHTML = "You are " + networkState + ".";
       target.appendChild(newState);
     }
 
