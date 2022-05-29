@@ -3,7 +3,8 @@ import "./App.css";
 import EventList from "./EventList";
 import CitySearch from "./CitySearch";
 import NumberOfEvents from "./NumberOfEvents";
-import { extractLocations, getEvents } from "./api";
+import WelcomeScreen from "./WelcomeScreen";
+import { getEvents, extractLocations, checkToken, getAccessToken } from "./api";
 import "./nprogress.css";
 
 class App extends Component {
@@ -13,6 +14,8 @@ class App extends Component {
     numberOfEvents: 15,
     eventCount: 15,
     currentLocation: "all",
+    offlineText: "",
+    showWelcomeScreen: undefined,
   };
 
   updateEvents = (location, eventNumber) => {
@@ -47,21 +50,32 @@ class App extends Component {
   async componentDidMount() {
     this.mounted = true;
 
-    let target = document.getElementById("target");
-    target.innerHTML = navigator.onLine ? "" : "You are offline.";
+    const accessToken = localStorage.getItem("access_token");
+    const isTokenValid = (await checkToken(accessToken)).error ? false : true;
+    const searchParams = new URLSearchParams(window.location.search);
+
+    const code = searchParams.get("code");
+    this.setState({ showWelcomeScreen: !(code || isTokenValid) });
+    if ((code || isTokenValid) && this.mounted) {
+      getEvents().then((events) => {
+        if (this.mounted) {
+          this.setState({ events, locations: extractLocations(events) });
+        }
+      });
+    }
+
+    document.getElementById("status").innerHTML = navigator.onLine
+      ? ""
+      : "offline";
+
+    var target = document.getElementById("target");
 
     function handleStateChange() {
-      target.innerHTML = "";
-      let newState = document.createElement("p");
-      let networkState = navigator.onLine ? "online" : "offline";
-      
-      if (networkState === "online") {
-        return newState.innerHTML = "";
-      } else {
-        return newState.innerHTML = "You are " + networkState + ".";
-      }
-      
-
+      var newState = document.createElement("p");
+      var state = navigator.onLine
+        ? ""
+        : "You are currently offline! Please provide a valid internet connection!";
+      target.innerHTML = state;
       target.appendChild(newState);
     }
 
@@ -80,9 +94,13 @@ class App extends Component {
   }
 
   render() {
+    if (this.state.showWelcomeScreen === undefined)
+      return <div className="App" />;
     const { eventCount } = this.state;
+
     return (
       <div>
+        <p id="status"></p>
         <div id="target"></div>
 
         <h1>Meet APP by cOsMiC</h1>
@@ -99,6 +117,12 @@ class App extends Component {
             eventCount={eventCount}
           />
           <EventList events={this.state.events} />
+          <WelcomeScreen
+            showWelcomeScreen={this.state.showWelcomeScreen}
+            getAccessToken={() => {
+              getAccessToken();
+            }}
+          />
         </div>
       </div>
     );
