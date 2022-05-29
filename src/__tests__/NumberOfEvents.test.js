@@ -11,7 +11,7 @@ describe('<NumberOfEvents /> component', () => {
     });
 
     test('render input field for number of events', () => {
-        expect(NumberOfEventsWrapper.find('.inputNumberOfEvents')).toHaveLength(1);
+        expect(NumberOfEventsWrapper.find('.numberInput')).toHaveLength(1);
     });
 
     test('change number of events when input changes', () => {

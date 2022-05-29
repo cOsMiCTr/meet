@@ -46,6 +46,7 @@ input[type="number"] {
 }
 
 .city {
+  margin: 1rem;
   width: 250px;
 }
 
@@ -59,9 +60,7 @@ input[type="number"] {
 }
 
 .suggestions {
-  width: 250px;
-  position: absolute;
-  z-index: 2;
+  position:inherit;
   align-self: center;
   margin: 0;
   top: 43px;
@@ -92,7 +91,7 @@ input[type="number"] {
   border: 1px solid #ccc;
   border-radius: 4px;
   position: relative;
-  
+  box-shadow: 10px 10px 16px -12px rgba(0, 0, 0, 0.75);
 }
 
 .details-btn {
@@ -137,7 +136,6 @@ input[type="number"] {
 }
 
 .Alert {
-  position: fixed;
   top: 20px;
 }
 
@@ -153,6 +151,8 @@ input[type="number"] {
 .recharts-surface {
   overflow: visible;
 }
+
+
 
 .login-button {
   color: #494949;
