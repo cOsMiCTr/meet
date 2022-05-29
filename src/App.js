@@ -61,8 +61,6 @@ class App extends Component {
         return newState.innerHTML = "You are " + networkState + ".";
       }
       
-
-      target.appendChild(newState);
     }
 
     window.addEventListener("online", handleStateChange);
