@@ -4,6 +4,7 @@ import EventList from "./EventList";
 import CitySearch from "./CitySearch";
 import NumberOfEvents from "./NumberOfEvents";
 import { extractLocations, getEvents } from "./api";
+import { OfflineAlert } from './Alert';
 import "./nprogress.css";
 
 class App extends Component {
@@ -13,6 +14,7 @@ class App extends Component {
     numberOfEvents: 15,
     eventCount: 15,
     currentLocation: "all",
+    offlineText:"",
   };
 
   updateEvents = (location, eventNumber) => {
@@ -47,18 +49,11 @@ class App extends Component {
   async componentDidMount() {
     this.mounted = true;
 
-    let target = document.getElementById("target");
-    target.innerHTML = navigator.onLine ? "" : "You are offline.";
-
     function handleStateChange() {
-      target.innerHTML = "";
-      let newState = document.createElement("p");
-      let networkState = navigator.onLine ? "online" : "offline";
-      
-      if (networkState === "online") {
-        return newState.innerHTML = "";
+      if (navigator.onLine === "online") {
+        return this.state.offlineText = "";
       } else {
-        return newState.innerHTML = "You are " + networkState + ".";
+        return this.state.offlineText = "You are offline.";
       }
       
     }
@@ -81,8 +76,7 @@ class App extends Component {
     const { eventCount } = this.state;
     return (
       <div>
-        <div id="target"></div>
-
+        <OfflineAlert id="target" text={this.state.offlineText}/>
         <h1>Meet APP by cOsMiC</h1>
         <p style={{ textAlign: "center" }}>
           Please choose a city to show its events!
