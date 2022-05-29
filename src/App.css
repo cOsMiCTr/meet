@@ -60,9 +60,7 @@ input[type="number"] {
 }
 
 .suggestions {
-
   position:inherit;
-  z-index: ;
   align-self: center;
   margin: 0;
   top: 43px;
@@ -93,7 +91,7 @@ input[type="number"] {
   border: 1px solid #ccc;
   border-radius: 4px;
   position: relative;
-  
+  box-shadow: 10px 10px 16px -12px rgba(0, 0, 0, 0.75);
 }
 
 .details-btn {

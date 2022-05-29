@@ -4,7 +4,6 @@ import EventList from "./EventList";
 import CitySearch from "./CitySearch";
 import NumberOfEvents from "./NumberOfEvents";
 import { extractLocations, getEvents } from "./api";
-
 import "./nprogress.css";
 
 class App extends Component {
@@ -45,8 +44,27 @@ class App extends Component {
     }
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.mounted = true;
+
+    let target = document.getElementById("target");
+    target.innerHTML = "";
+    target.innerHTML = navigator.onLine
+      ? "You are online."
+      : "You are offline.";
+
+
+
+    function handleStateChange() {
+      target.innerHTML = "";
+      let newState = document.createElement("p");
+      newState.innerHTML = "You are " + navigator.onLine + ".";
+      target.appendChild(newState);
+    }
+
+    window.addEventListener("online", handleStateChange);
+    window.addEventListener("offline", handleStateChange);
+
     getEvents().then((events) => {
       if (this.mounted) {
         this.setState({ events, locations: extractLocations(events) });
@@ -54,7 +72,7 @@ class App extends Component {
     });
   }
 
-  componentWillUnmount() {
+  async componentWillUnmount() {
     this.mounted = false;
   }
 
@@ -62,8 +80,12 @@ class App extends Component {
     const { eventCount } = this.state;
     return (
       <div>
+        <div id="target"></div>
+
         <h1>Meet APP by cOsMiC</h1>
-        <p style={{textAlign:'center'}}>Please choose a city to show its events!</p>
+        <p style={{ textAlign: "center" }}>
+          Please choose a city to show its events!
+        </p>
         <div className="App">
           <CitySearch
             locations={this.state.locations}
@@ -72,7 +94,6 @@ class App extends Component {
           <NumberOfEvents
             updateEvents={this.updateEvents}
             eventCount={eventCount}
-            
           />
           <EventList events={this.state.events} />
         </div>
