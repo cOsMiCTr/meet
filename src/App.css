@@ -84,6 +84,10 @@ input[type="number"] {
   background-color: #bcdcdb;
 }
 
+.Chart {
+  display: flex;
+}
+
 .event {
   padding: 10px 10px 35px;
   margin-bottom: 10px;

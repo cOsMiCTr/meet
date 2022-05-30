@@ -1,16 +1,21 @@
 import React, { Component } from "react";
+import { Row } from "react-bootstrap";
 import "./App.css";
 import EventList from "./EventList";
 import CitySearch from "./CitySearch";
 import NumberOfEvents from "./NumberOfEvents";
-import WelcomeScreen from "./WelcomeScreen";
 import { getEvents, extractLocations, checkToken, getAccessToken } from "./api";
 import "./nprogress.css";
+import ChartP from "./ChartP";
+import ChartS from "./ChartS";
+import { ResponsiveContainer } from "recharts";
+import WelcomeScreen from './WelcomeScreen';
 
 class App extends Component {
   state = {
     events: [],
     locations: [],
+    summary: [],
     numberOfEvents: 15,
     eventCount: 15,
     currentLocation: "all",
@@ -93,6 +98,18 @@ class App extends Component {
     this.mounted = false;
   }
 
+  getData = () => {
+    const { locations, events } = this.state;
+    const data = locations.map((location) => {
+      const number = events.filter(
+        (event) => event.location === location
+      ).length;
+      const city = location.split(" ").shift();
+      return { city, number };
+    });
+    return data;
+  };
+
   render() {
     if (this.state.showWelcomeScreen === undefined)
       return <div className="App" />;
@@ -102,16 +119,30 @@ class App extends Component {
       <div>
         <p id="status"></p>
         <div id="target"></div>
-
+        {}
         <h1>Meet APP by cOsMiC</h1>
         <p style={{ textAlign: "center" }}>
           Please choose a city to show its events!
         </p>
         <div className="App">
           <CitySearch
-            locations={this.state.locations}
+            locations={this.state.events}
             updateEvents={this.updateEvents}
           />
+          <Row className="Chart">
+            <ResponsiveContainer>
+              <ChartP
+                locations={this.state.locations}
+                events={this.state.events}
+              />
+            </ResponsiveContainer>
+            <ResponsiveContainer>
+              <ChartS
+                locations={this.state.locations}
+                events={this.state.events}
+              />
+            </ResponsiveContainer>
+          </Row>
           <NumberOfEvents
             updateEvents={this.updateEvents}
             eventCount={eventCount}
